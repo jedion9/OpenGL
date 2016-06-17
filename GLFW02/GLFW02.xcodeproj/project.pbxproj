@@ -28,7 +28,7 @@
 		CA0B87651CB70C01006099A8 /* GLFW02 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GLFW02; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0B87681CB70C01006099A8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		CA0B876F1CB70C29006099A8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
+		CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = /usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<absolute>"; };
 		CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vShader.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
