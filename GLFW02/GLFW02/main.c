@@ -7,10 +7,12 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
 #include <math.h>
 
+/*
 const GLchar* vertexShaderSource = "#version 330 core\n "
     "layout (location = 0) in vec3 position; \n "
     "layout (location = 1) in vec3 color; \n"
@@ -20,7 +22,8 @@ const GLchar* vertexShaderSource = "#version 330 core\n "
     "gl_Position = vec4(position, 1.0); \n"
     "ourColor = color; \n"
     "}\0";
-
+*/
+ 
 const GLchar* fragmentShaderSource = "#version 330 core\n"
     "in vec3 ourColor; \n"
     "out vec4 color;\n "
@@ -79,8 +82,30 @@ int main(int argc, const char * argv[]) {
     glViewport(0, 0, 800, 600);
     
     FILE *file;
+    char c;
+    int i = 0;
+    char vertexShaderString[183];
     
-    file = fopen("vShader.txt", "r");
+    file = fopen("/Users/alexregister/Documents/Git/OpenGL/GLFW02/GLFW02/vShader.txt", "r");
+    
+    if(file){
+        while((c = fgetc(file))!=EOF){
+            //printf("%c", c);
+            vertexShaderString[i] = c;
+            i++;
+        }
+    }
+    else{
+        perror("OH NO!!!");
+    }
+    
+    //printf("%s", vertexShaderString);
+    
+    fclose(file);
+    
+    const GLchar* vertexShaderSource = vertexShaderString;
+    //printf("%s", vertexShaderString);
+    //printf("%s", vertexShaderSource);
 
     //Need FILE converted to const GLuint!!!
     
@@ -88,15 +113,15 @@ int main(int argc, const char * argv[]) {
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     
-    /* How to check for compile time errors:
-    GLint sucess;
-    GLchar inforLog[512];
-     
+    
+    GLint success;
+    GLchar infoLog[512];
+    
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if(!sucess){
+    if(!success){
     glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    printf("ERROR:SHADER:VERTEX:COMPILATION_FAILED\n");
-    } */
+    printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
+    }
     
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
