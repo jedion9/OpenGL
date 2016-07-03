@@ -12,37 +12,7 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
 
-/*
-const GLchar* vertexShaderSource = "#version 330 core\n "
-    "layout (location = 0) in vec3 position; \n "
-    "layout (location = 1) in vec3 color; \n"
-    "out vec3 ourColor; \n"
-    "void main()\n "
-    "{\n "
-    "gl_Position = vec4(position, 1.0); \n"
-    "ourColor = color; \n"
-    "}\0";
-*/
- 
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-    "in vec3 ourColor; \n"
-    "out vec4 color;\n "
-    "void main()\n "
-    "{\n "
-    "color = vec4(ourColor, 1.0f);\n "
-    "}\n\0";
-
-const GLchar* vertexShaderSourceFromFile = "";
-
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode){
-
-    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS){
-    
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    
-    }
-
-}
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
 int main(int argc, const char * argv[]) {
     
@@ -81,39 +51,46 @@ int main(int argc, const char * argv[]) {
     
     glViewport(0, 0, 800, 600);
     
-    FILE *file;
+    FILE *vertexFile, *fragmentFile;
     char c;
-    int i = 0;
-    char vertexShaderString[183];
+    char vertexShaderString[255] = {'\0'};
+    char fragmentShaderString[255] = {'\0'};
     
-    file = fopen("/Users/alexregister/Documents/Git/OpenGL/GLFW02/GLFW02/vShader.txt", "r");
+    vertexFile = fopen("/Users/alexregister/Documents/Git/OpenGL/GLFW02/GLFW02/vShader.txt", "r");
+    fragmentFile = fopen("/Users/alexregister/Documents/Git/OpenGL/GLFW02/GLFW02/fShader.txt", "r");
     
-    if(file){
-        while((c = fgetc(file))!=EOF){
-            //printf("%c", c);
-            vertexShaderString[i] = c;
-            i++;
-        }
-    }
-    else{
-        perror("OH NO!!!");
-    }
+    /*
+     Dont put '\0' at end of any shader file.  
+     
+     ERROR: 0:11: '<' : syntax error: syntax error
+     
+     Escape (\) characters are not supported in the GLSL compiler.
+    */
     
-    //printf("%s", vertexShaderString);
+    if(vertexFile){
+        int i;
+        for(i = 0; (c = fgetc(vertexFile)) != EOF && i < 254; i++){ vertexShaderString[i] = c; }
+        vertexShaderString[i] = '\0';
+    } else { perror("OH NO!!!"); }
     
-    fclose(file);
+    if(fragmentFile){
+        int i;
+        for(i = 0; (c = fgetc(fragmentFile)) != EOF && i < 254; i++){ fragmentShaderString[i] = c; }
+        fragmentShaderString[i] = '\0';
+    } else { perror("OH NO!!!"); }
+    
+    
+    fclose(fragmentFile);
+    fclose(vertexFile);
     
     const GLchar* vertexShaderSource = vertexShaderString;
-    //printf("%s", vertexShaderString);
-    //printf("%s", vertexShaderSource);
-
-    //Need FILE converted to const GLuint!!!
+    const GLchar* fragmentShaderSource = fragmentShaderString;
     
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     
-    
+    /*
     GLint success;
     GLchar infoLog[512];
     
@@ -122,6 +99,7 @@ int main(int argc, const char * argv[]) {
     glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
     printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
     }
+    */
     
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
@@ -216,4 +194,14 @@ int main(int argc, const char * argv[]) {
     
     
     return 0;
+}
+
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode){
+    
+    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS){
+        
+        glfwSetWindowShouldClose(window, GL_TRUE);
+        
+    }
+    
 }
