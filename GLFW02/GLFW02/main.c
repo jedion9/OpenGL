@@ -10,11 +10,16 @@
 #include <stdlib.h>
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
+#include "Vec4.h"
+#include "Mat4.h"
 #include <math.h>
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
 int main(int argc, const char * argv[]) {
+    
+    struct Vec4 vector;
+    vec(&vector, 1.0f, 0.0f, 0.0f, 1.0f);
     
     glfwInit();
     
@@ -56,8 +61,8 @@ int main(int argc, const char * argv[]) {
     char vertexShaderString[255] = {'\0'};
     char fragmentShaderString[255] = {'\0'};
     
-    vertexFile = fopen("/Users/alexregister/Documents/Git/OpenGL/GLFW02/GLFW02/vShader.txt", "r");
-    fragmentFile = fopen("/Users/alexregister/Documents/Git/OpenGL/GLFW02/GLFW02/fShader.txt", "r");
+    vertexFile = fopen("Shaders/vShader.txt", "r");
+    fragmentFile = fopen("Shaders/fShader.txt", "r");
     
     /*
      Dont put '\0' at end of any shader file.  
@@ -139,6 +144,34 @@ int main(int argc, const char * argv[]) {
 
     };
     
+    /* GL texture wrapping options:
+     GL_REPEAT (default if none specified)
+     GL_MIRRORED_REPEAT: repeats but img is mirrored
+     GL_CLAMP_TO_EDGE:  "Clamps" coordinates between 0 and 1.  The result is that higher
+                        coordinates become clamped to the edge, resulting in a stretched pattern.
+     GL_CLAMP_TO_BORDER: Coordinates outside the range are not given user-specified border color.
+     */
+    
+    /* GL Mipmap filtering methods
+        (Mipmaps are used by openGL when high-resolution textures are far away.  When called, 
+        it will create the same texture, but twice as small, so that when picking a color for 
+        sampling, it is easier and faster).
+     
+     GL_NEAREST_MIPMAP_NEAREST: Takes the nearest mipmap to match the pixel size and uses nearest
+                                neighbor interpolation for texture sampling.
+     GL_LINEAR_MIPMAP_NEAREST:  Takes the nearest mipmap level and samples using linear interpolation
+     GL_NEAREST_MIPMAP_LINEAR:  Linearly interpolates between the two mipmaps that most closely
+                                match the size of a pixel and samples via nearest neighbor interpolation
+     GL_LINEAR_MIPMAP_LINEAR:   Linearly interpolates between the two closest mipmaps and samples
+                                the texture via linear interpolation.
+     */
+    
+    GLfloat textureCoordinates[] = {
+        0.0f, 0.0f,     // Lower-left corner
+        1.0f, 0.0f,     // Lower-right corner
+        0.5f, 1.0f      // Top-center corner
+    };
+    
     GLuint VBO, VAO; //Stands for Vertex Buffer Object, and Vertex Array Object
     glGenBuffers(1, &VBO); //Generates Buffer
     glGenVertexArrays(1, &VAO);
@@ -178,7 +211,6 @@ int main(int argc, const char * argv[]) {
         GLint vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor"); //if glGetUniformLocation returns -1, "ourColor"
                                                                                      //was not found.
         glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-        
         
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);

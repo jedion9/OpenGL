@@ -10,17 +10,21 @@
 		CA0B87691CB70C01006099A8 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CA0B87681CB70C01006099A8 /* main.c */; };
 		CA0B87701CB70C29006099A8 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0B876F1CB70C29006099A8 /* OpenGL.framework */; };
 		CA0B87721CB70C3C006099A8 /* libglfw3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */; };
+		CA49CD221D28D47100534FB3 /* vShader.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */; };
+		CA49CD231D28D47500534FB3 /* fShader.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = CA49CD1F1D28CEC800534FB3 /* fShader.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		CA0B87631CB70C01006099A8 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = shaders;
+			dstSubfolderSpec = 16;
 			files = (
+				CA49CD231D28D47500534FB3 /* fShader.txt in CopyFiles */,
+				CA49CD221D28D47100534FB3 /* vShader.txt in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -30,6 +34,9 @@
 		CA0B876F1CB70C29006099A8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
 		CA49CD1F1D28CEC800534FB3 /* fShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fShader.txt; sourceTree = "<group>"; };
+		CA4F958C1D2AC804009734A9 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
+		CADF7AED1D2AF9BB0025C7BE /* Mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mat4.h; sourceTree = "<group>"; };
+		CADF7AEE1D2AFA660025C7BE /* Vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec4.h; sourceTree = "<group>"; };
 		CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vShader.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,11 +74,38 @@
 		CA0B87671CB70C01006099A8 /* GLFW02 */ = {
 			isa = PBXGroup;
 			children = (
-				CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */,
+				CA4F958D1D2AD8B0009734A9 /* Header Files */,
+				CA4F958B1D2AC7DB009734A9 /* Resources */,
+				CA49CD241D28D61C00534FB3 /* Shaders */,
 				CA0B87681CB70C01006099A8 /* main.c */,
-				CA49CD1F1D28CEC800534FB3 /* fShader.txt */,
 			);
 			path = GLFW02;
+			sourceTree = "<group>";
+		};
+		CA49CD241D28D61C00534FB3 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */,
+				CA49CD1F1D28CEC800534FB3 /* fShader.txt */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
+		CA4F958B1D2AC7DB009734A9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CA4F958C1D2AC804009734A9 /* wall.jpg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		CA4F958D1D2AD8B0009734A9 /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				CADF7AEE1D2AFA660025C7BE /* Vec4.h */,
+				CADF7AED1D2AF9BB0025C7BE /* Mat4.h */,
+			);
+			name = "Header Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,11 +255,14 @@
 		CA0B876D1CB70C01006099A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_MODULES_AUTOLINK = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glfw3/3.1.2/lib,
 					/usr/local/lib,
+					"$(PROJECT_DIR)/GLFW02",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -234,11 +271,14 @@
 		CA0B876E1CB70C01006099A8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_MODULES_AUTOLINK = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glfw3/3.1.2/lib,
 					/usr/local/lib,
+					"$(PROJECT_DIR)/GLFW02",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
