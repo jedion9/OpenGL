@@ -42,10 +42,10 @@ void mat4Identity( struct Mat4 *m){
 }
 
 void mat4Translate(struct Mat4 *m, struct Vec3 *v){
-
-    m->numbers[0][3] = v->verticies[0];
-    m->numbers[1][3] = v->verticies[1];
-    m->numbers[2][3] = v->verticies[2];
+    
+    m->numbers[0][3] += v->verticies[0];
+    m->numbers[1][3] += v->verticies[1];
+    m->numbers[2][3] += v->verticies[2];
 
 }
 
