@@ -29,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CA007A421D2C51160055AD5F /* Vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec3.h; sourceTree = "<group>"; };
 		CA0B87651CB70C01006099A8 /* GLFW02 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GLFW02; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0B87681CB70C01006099A8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		CA0B876F1CB70C29006099A8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -102,6 +103,7 @@
 		CA4F958D1D2AD8B0009734A9 /* Header Files */ = {
 			isa = PBXGroup;
 			children = (
+				CA007A421D2C51160055AD5F /* Vec3.h */,
 				CADF7AEE1D2AFA660025C7BE /* Vec4.h */,
 				CADF7AED1D2AF9BB0025C7BE /* Mat4.h */,
 			);
