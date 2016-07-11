@@ -34,6 +34,7 @@
 		CA0B87681CB70C01006099A8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		CA0B876F1CB70C29006099A8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
+		CA3FDE991D2EFABA004241B4 /* MyGLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGLM.h; sourceTree = "<group>"; };
 		CA49CD1F1D28CEC800534FB3 /* fShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fShader.txt; sourceTree = "<group>"; };
 		CA4F958C1D2AC804009734A9 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		CADF7AED1D2AF9BB0025C7BE /* Mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mat4.h; sourceTree = "<group>"; };
@@ -106,6 +107,7 @@
 				CA007A421D2C51160055AD5F /* Vec3.h */,
 				CADF7AEE1D2AFA660025C7BE /* Vec4.h */,
 				CADF7AED1D2AF9BB0025C7BE /* Mat4.h */,
+				CA3FDE991D2EFABA004241B4 /* MyGLM.h */,
 			);
 			name = "Header Files";
 			sourceTree = "<group>";

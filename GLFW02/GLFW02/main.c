@@ -10,31 +10,30 @@
 #include <stdlib.h>
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
-#include "Vec3.h"
-#include "Vec4.h"
-#include "Mat4.h"
+#include "MyGLM.h"
 #include <math.h>
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
 int main(int argc, const char * argv[]) {
     
-    struct Vec3 transVector;
+    Vec3 transVector;
     newVec3(&transVector, 1.0f, 1.0f, 0.0f);
     
-    struct Vec4 vector;
+    Vec4 vector;
     newVec4(&vector, 1.0f, 0.0f, 0.0f, 1.0f);
     
-    struct Mat4 trans;
-    mat4Identity(&trans); //Identity Matrix by default
+    Mat4 trans;
+    setMat4(&trans, EMPTY); //Empty Matrix
+    
+    
+    //printMat4(&trans);
+    
+    translate(&trans, &transVector);
     
     printMat4(&trans);
     
-    mat4Translate(&trans, &transVector);
-    
-    printMat4(&trans);
-    
-    multiply(&trans, &vector);
+    Mat4XVec4(&trans, &vector);
     
     printVec4(&vector);
     
