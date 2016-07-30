@@ -37,6 +37,7 @@
 		CA3FDE991D2EFABA004241B4 /* MyGLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGLM.h; sourceTree = "<group>"; };
 		CA49CD1F1D28CEC800534FB3 /* fShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fShader.txt; sourceTree = "<group>"; };
 		CA4F958C1D2AC804009734A9 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
+		CA69C0DB1D39EAC7005AACF4 /* QMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMath.h; sourceTree = "<group>"; };
 		CADF7AED1D2AF9BB0025C7BE /* Mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mat4.h; sourceTree = "<group>"; };
 		CADF7AEE1D2AFA660025C7BE /* Vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec4.h; sourceTree = "<group>"; };
 		CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vShader.txt; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 				CADF7AEE1D2AFA660025C7BE /* Vec4.h */,
 				CADF7AED1D2AF9BB0025C7BE /* Mat4.h */,
 				CA3FDE991D2EFABA004241B4 /* MyGLM.h */,
+				CA69C0DB1D39EAC7005AACF4 /* QMath.h */,
 			);
 			name = "Header Files";
 			sourceTree = "<group>";

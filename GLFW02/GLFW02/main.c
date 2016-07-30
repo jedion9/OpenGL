@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
+#include "QMath.h"
 #include "MyGLM.h"
 #include <math.h>
 
@@ -17,6 +18,16 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) {
     
+    Vec4 point;
+    newVec4(&point, 0.5f, -0.5f, 0.0f, 0.0f);
+    
+    Vec3 vector;
+    newVec3(&vector, 0.0f, 0.0f, 1.0f);
+    
+    qRotate(&point, 90.0f, &vector);
+    
+    /*  MyGLM.h experimentation
+     
     Vec3 transVector;
     newVec3(&transVector, 1.0f, 1.0f, 0.0f);
     
@@ -25,7 +36,6 @@ int main(int argc, const char * argv[]) {
     
     Mat4 trans;
     setMat4(&trans, EMPTY); //Empty Matrix
-    
     
     //printMat4(&trans);
     
@@ -36,6 +46,7 @@ int main(int argc, const char * argv[]) {
     Mat4XVec4(&trans, &vector);
     
     printVec4(&vector);
+    */
     
     
     glfwInit();
