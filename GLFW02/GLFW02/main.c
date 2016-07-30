@@ -13,8 +13,11 @@
 #include "QMath.h"
 #include "MyGLM.h"
 #include <math.h>
+#include "SOIL.h"
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
+
+const int bufferSize = 512;
 
 int main(int argc, const char * argv[]) {
     
@@ -86,8 +89,8 @@ int main(int argc, const char * argv[]) {
     
     FILE *vertexFile, *fragmentFile;
     char c;
-    char vertexShaderString[255] = {'\0'};
-    char fragmentShaderString[255] = {'\0'};
+    char vertexShaderString[bufferSize] = {'\0'};
+    char fragmentShaderString[bufferSize] = {'\0'};
     
     vertexFile = fopen("Shaders/vShader.txt", "r");
     fragmentFile = fopen("Shaders/fShader.txt", "r");
@@ -102,13 +105,13 @@ int main(int argc, const char * argv[]) {
     
     if(vertexFile){
         int i;
-        for(i = 0; (c = fgetc(vertexFile)) != EOF && i < 254; i++){ vertexShaderString[i] = c; }
+        for(i = 0; (c = fgetc(vertexFile)) != EOF && i < bufferSize - 1 ; i++){ vertexShaderString[i] = c; }
         vertexShaderString[i] = '\0';
     } else { perror("OH NO!!!"); }
     
     if(fragmentFile){
         int i;
-        for(i = 0; (c = fgetc(fragmentFile)) != EOF && i < 254; i++){ fragmentShaderString[i] = c; }
+        for(i = 0; (c = fgetc(fragmentFile)) != EOF && i < bufferSize - 1; i++){ fragmentShaderString[i] = c; }
         fragmentShaderString[i] = '\0';
     } else { perror("OH NO!!!"); }
     
@@ -123,27 +126,27 @@ int main(int argc, const char * argv[]) {
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     
-    /*
+    
     GLint success;
     GLchar infoLog[512];
     
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if(!success){
-    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
     }
-    */
+    
     
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
     
-    /* How to check for compile time errors:
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &sucess);
-    if(!sucess){
-    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-    printf("ERROR:SHADER:FRAGMENT:COMPILATION_FAILED\n");
-    } */
+    /* How to check for compile time errors: */
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if(!success){
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
+    }
     
     GLuint shaderProgram;
     shaderProgram = glCreateProgram();
@@ -151,13 +154,13 @@ int main(int argc, const char * argv[]) {
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
     
-    /* How to check for Linking errors:
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &sucess);
-    if(!suceess){
-    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-    printf("ERROR:SHADER:PROGRAM:LINKINGFAILED\n");
+    /* How to check for Linking errors:*/
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if(!success){
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
     }
-     */
+    
     
     glUseProgram(shaderProgram);
     glDeleteShader(vertexShader);
@@ -165,10 +168,10 @@ int main(int argc, const char * argv[]) {
     
     //Actually making the triangle
     GLfloat vertices[] = {
-         //Positions         //Colors
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  //Bottom Right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  //Bottom Left
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   //Top
+         //Positions         //Colors           //Texture
+         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f,  //Bottom Right
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,  //Bottom Left
+         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5f, 1.0f   //Top
 
     };
     
@@ -194,13 +197,7 @@ int main(int argc, const char * argv[]) {
                                 the texture via linear interpolation.
      */
     
-    GLfloat textureCoordinates[] = {
-        0.0f, 0.0f,     // Lower-left corner
-        1.0f, 0.0f,     // Lower-right corner
-        0.5f, 1.0f      // Top-center corner
-    };
-    
-    GLuint VBO, VAO; //Stands for Vertex Buffer Object, and Vertex Array Object
+    GLuint VBO, VAO, tex; //Stands for Vertex Buffer Object, and Vertex Array Object
     glGenBuffers(1, &VBO); //Generates Buffer
     glGenVertexArrays(1, &VAO);
     
@@ -210,16 +207,36 @@ int main(int argc, const char * argv[]) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //copies array Vertices into buffer's memory.
     
     //Possition attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
     
     //Color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
     
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //Texture attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(2);
     
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+    
+    
+    //Texture configuration, generation, and binding
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    int width, height;
+    unsigned char* image = SOIL_load_image("Shaders/wall.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(0);
+    SOIL_free_image_data(image);
+    glBindTexture(GL_TEXTURE_2D, 0); //unbind when finished
+    
+    
     
     //Fourth paramerter indicates what kind of memory data should be stored in:
     //GL_STATIC_DRAW: data will most likely not change at all or rarely.
@@ -239,6 +256,11 @@ int main(int argc, const char * argv[]) {
         GLint vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor"); //if glGetUniformLocation returns -1, "ourColor"
                                                                                      //was not found.
         glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+        
+        
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glUniform1i(glGetUniformLocation(shaderProgram, "sampler"), 0);
         
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
