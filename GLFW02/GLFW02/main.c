@@ -11,7 +11,6 @@
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
 #include "QMath.h"
-#include "MyGLM.h"
 #include <math.h>
 #include "SOIL.h"
 
@@ -21,35 +20,16 @@ const int bufferSize = 512;
 
 int main(int argc, const char * argv[]) {
     
-    Vec4 point;
-    newVec4(&point, 0.5f, -0.5f, 0.0f, 0.0f);
-    
-    Vec3 vector;
-    newVec3(&vector, 0.0f, 0.0f, 1.0f);
-    
-    qRotate(&point, 90.0f, &vector);
-    
-    /*  MyGLM.h experimentation
-     
-    Vec3 transVector;
-    newVec3(&transVector, 1.0f, 1.0f, 0.0f);
+    Vec3 point;
+    setVec3(&point, 0.5f, -0.5f, 0.0f);
     
     Vec4 vector;
-    newVec4(&vector, 1.0f, 0.0f, 0.0f, 1.0f);
+    setVec4(&vector, 0.0f, 0.0f, 1.0f, 90.0f);
     
-    Mat4 trans;
-    setMat4(&trans, EMPTY); //Empty Matrix
+    Vec3 rotatedPoint;
+    qRotate(&point, &vector, &rotatedPoint);
     
-    //printMat4(&trans);
-    
-    translate(&trans, &transVector);
-    
-    printMat4(&trans);
-    
-    Mat4XVec4(&trans, &vector);
-    
-    printVec4(&vector);
-    */
+    printf("Rotated Point: (%.1f, %.1f, %.1f)\n", rotatedPoint.x, rotatedPoint.y, rotatedPoint.z);
     
     
     glfwInit();

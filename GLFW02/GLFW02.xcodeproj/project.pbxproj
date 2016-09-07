@@ -36,21 +36,13 @@
 		653A650E1D334C12009F6862 /* SOIL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOIL.h; sourceTree = "<group>"; };
 		653A650F1D334C1F009F6862 /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = GLFW02/libSOIL.a; sourceTree = "<group>"; };
 		653A65111D334C2F009F6862 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		CA007A421D2C51160055AD5F /* Vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec3.h; sourceTree = "<group>"; };
 		CA0B87651CB70C01006099A8 /* GLFW02 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GLFW02; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0B87681CB70C01006099A8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		CA0B876F1CB70C29006099A8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-<<<<<<< HEAD
-		CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
-		CA3FDE991D2EFABA004241B4 /* MyGLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGLM.h; sourceTree = "<group>"; };
-=======
 		CA0B87711CB70C3C006099A8 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = /usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<absolute>"; };
->>>>>>> 30a6b8b49a78cd642fd972f79f31d5dcd2072499
 		CA49CD1F1D28CEC800534FB3 /* fShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fShader.txt; sourceTree = "<group>"; };
 		CA4F958C1D2AC804009734A9 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		CA69C0DB1D39EAC7005AACF4 /* QMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMath.h; sourceTree = "<group>"; };
-		CADF7AED1D2AF9BB0025C7BE /* Mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mat4.h; sourceTree = "<group>"; };
-		CADF7AEE1D2AFA660025C7BE /* Vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec4.h; sourceTree = "<group>"; };
 		CAF8A5DD1D0E645E00BB6A73 /* vShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vShader.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,10 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				653A650E1D334C12009F6862 /* SOIL.h */,
-				CA007A421D2C51160055AD5F /* Vec3.h */,
-				CADF7AEE1D2AFA660025C7BE /* Vec4.h */,
-				CADF7AED1D2AF9BB0025C7BE /* Mat4.h */,
-				CA3FDE991D2EFABA004241B4 /* MyGLM.h */,
 				CA69C0DB1D39EAC7005AACF4 /* QMath.h */,
 			);
 			name = "Header Files";
