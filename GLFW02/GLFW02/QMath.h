@@ -19,6 +19,10 @@ typedef struct Vector4{
     float x, y, z, w;
 } Vec4;
 
+typedef struct VectorArray4{
+    float val[4];
+} VecArr4;
+
 void setVec3(Vec3 *v, float x, float y, float z);
 void setVec4(Vec4 *v, float x, float y, float z, float w);
 void qVectorToUnitVector(Vec3 *u, Vec4 *v);
@@ -28,12 +32,26 @@ void qDegreesToRadians(float *f, float *d);
 void qMultiply(Vec4 *q3, Vec4 *q1, Vec4 *q2);
 void qRotate(Vec3 *p, Vec4 *v, Vec3 *rp);
 
+void setVec2(Vec3 *v, float x, float y){
+    v->x = x;
+    v->y = y;
+}
+
 void setVec3(Vec3 *v, float x, float y, float z){
     v->x = x;
     v->y = y;
     v->z = z;
 }
 
+/* 
+assigns values to given Vec4
+ 
+@param v - The vector to assign values to
+@param x - the x-component
+ 
+@return the vec4 with the new values
+
+ */
 void setVec4(Vec4 *v, float x, float y, float z, float w){
     v->x = x;
     v->y = y;
@@ -54,9 +72,14 @@ void qVectorToUnitVector(Vec3 *u, Vec4 *v){
     
 }
 
+
+
+
+
 void qVectorToUnitQuaternion(Vec4 *q, Vec4 *v){
 
-    //(Cos(ø/2) + (Uvx * Sin(ø/2))i + (Uvy * Sin(ø/2))j + (Uvz * Sin(ø/2))k)
+    //quaternion definition = (Cos(ø/2) + (Uvx * Sin(ø/2))i + (Uvy * Sin(ø/2))j + (Uvz * Sin(ø/2))k)
+    //where the axis of rotation = (Uvx, Uvy, Uvz)
     
     Vec3 u;
     float radiansTheta;
@@ -70,6 +93,10 @@ void qVectorToUnitQuaternion(Vec4 *q, Vec4 *v){
     setVec4(q, u.x * half_sine, u.y * half_sine, u.z * half_sine, cosf(radiansTheta / 2));
 
 }
+
+
+
+
 
 void qPointToQuaternion(Vec4 *q, Vec3 *p){ setVec4(q, p->x, p->y, p->z, 0); }
 

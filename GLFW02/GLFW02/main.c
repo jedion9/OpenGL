@@ -16,7 +16,7 @@
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
-const int bufferSize = 512;
+const int bufferSize = 4096;
 
 int main(int argc, const char * argv[]) {
     
@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
     setVec3(&point, 0.5f, -0.5f, 0.0f);
     
     Vec4 vector;
-    setVec4(&vector, 0.0f, 0.0f, 1.0f, 90.0f);
+    setVec4(&vector, 0.5f, 0.5f, 1.0f, 90.0f);
     
     Vec3 rotatedPoint;
     qRotate(&point, &vector, &rotatedPoint);
@@ -106,7 +106,6 @@ int main(int argc, const char * argv[]) {
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     
-    
     GLint success;
     GLchar infoLog[512];
     
@@ -125,7 +124,7 @@ int main(int argc, const char * argv[]) {
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if(!success){
         glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
+        printf(" ERROR:SHADER:FRAGMENT:COMPILATION_FAILED\n %s", infoLog);
     }
     
     GLuint shaderProgram;
@@ -138,7 +137,7 @@ int main(int argc, const char * argv[]) {
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
     if(!success){
         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        printf(" ERROR:SHADER:VERTEX:COMPILATION_FAILED\n %s", infoLog);
+        printf(" ERROR:SHADER:SHADERPROGRAM:COMPILATION_FAILED\n %s", infoLog);
     }
     
     
@@ -215,6 +214,17 @@ int main(int argc, const char * argv[]) {
     glGenerateMipmap(0);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0); //unbind when finished
+    
+    
+    VecArr4 vec;
+    vec.val[0] = vector.x;
+    vec.val[1] = vector.y;
+    vec.val[2] = vector.z;
+    vec.val[3] = vector.w;
+    
+    GLuint rvLoc = glGetUniformLocation(shaderProgram, "rv");
+    const GLfloat *v = &vec.val[0];
+    glUniform3fv(rvLoc, 1, v);
     
     
     

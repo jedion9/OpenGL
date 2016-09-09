@@ -1,16 +1,80 @@
 #version 330 core
 
-layout (location = 0) in vec3 position;
+layout (location = 0) in vec3 point;
 layout (location = 1) in vec3 color;
 layout (location = 2) in vec2 tex_coords;
 
 out vec3 ourColor;
 out vec2 texCoords;
 
+uniform vec4 rv; //Vector used to rotate a point
+
+vec3 qRotate(vec4 v, vec3 p);
+vec4 qMultiply(vec4 q1, vec4 q2);
+
 void main() {
-    gl_Position = vec4(position, 1.0);
+
+    gl_Position = vec4(point + vec3(rv.x, rv.y, rv.z), 1.0);
+
     ourColor = color;
 
     //Swap y-axis because most images inverted
     texCoords = vec2(tex_coords.x, 1.0 - tex_coords.y);
+
+}
+
+vec3 qRotate(vec4 v, vec3 p){
+
+    float vMag = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+    float vLength = vMag / (vMag * vMag);
+
+    vec3 rp;
+    vec4 half_rp, full_rp;
+
+    vec3 u; //Doesnt seem to like using the constructors with math in paramaters.
+    u = vec3(v.x * vLength, v.y * vLength, u.z * vLength);
+
+    float radiansTheta = v.w * 3.14159 / 180;   //Turns degrees of Vector into radians
+
+    //Unit Vector to Quaternion: cos(ø/2) + (u.x * sin(ø/2))i + (u.y * sin(ø/2))k + (u.z * sin(ø/2))k)
+
+    float half_sine = sin(radiansTheta / 2);
+    vec4 q1;
+    q1 = vec4(u.x * half_sine, u.y * half_sine, u.z * half_sine, cos(radiansTheta / 2));
+
+    //Point to Quaternion
+
+    vec4 q2;  q2 = vec4(p.x, p.y, p.z, 0);
+
+    //rp = q1 * q2 * q1 conjucate
+
+    half_rp = qMultiply(q1, q2);
+
+    //q1 Conjucate
+
+    q1.x = -q1.x;
+    q1.y = -q1.y;
+    q1.z = -q1.z;
+    q1.w =  q1.w;
+
+    full_rp = qMultiply(half_rp, q1);
+
+    rp = vec3(full_rp.x, full_rp.y, full_rp.z);
+
+    return rp;
+}
+
+vec4 qMultiply(vec4 q1, vec4 q2){
+
+    //q1q2 = q1.w * q2.w - dot(u1, u2), q1.w * u2 + q2.w * u1 + cross(u1 * u2);
+
+    vec4 product;
+
+    product.w = q1.w * q2.w - q1.x * q2.x + q1.y + q2.y + q1.z * q2.z;
+    product.x = q1.w * q2.x + q2.w * q1.x + q1.y * q2.z - q1.z * q2.y;
+    product.y = q1.w * q2.y + q2.w * q1.y + q1.z * q2.x - q1.x * q1.z;
+    product.z = q1.w * q2.z + q2.w * q1.z + q1.x * q2.y - q1.y * q1.x;
+
+    return product;
+
 }
