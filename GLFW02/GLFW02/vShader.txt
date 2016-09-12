@@ -14,7 +14,7 @@ vec4 qMultiply(vec4 q1, vec4 q2);
 
 void main() {
 
-    gl_Position = vec4(point + vec3(rv.x, rv.y, rv.z), 1.0);
+    gl_Position = vec4(qRotate(rv, point), 1.0);
 
     ourColor = color;
 

@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
     setVec3(&point, 0.5f, -0.5f, 0.0f);
     
     Vec4 vector;
-    setVec4(&vector, 0.5f, 0.5f, 1.0f, 90.0f);
+    setVec4(&vector, 0.0f, 0.0f, 1.0f, 90.0f);
     
     Vec3 rotatedPoint;
     qRotate(&point, &vector, &rotatedPoint);
@@ -224,7 +224,7 @@ int main(int argc, const char * argv[]) {
     
     GLuint rvLoc = glGetUniformLocation(shaderProgram, "rv");
     const GLfloat *v = &vec.val[0];
-    glUniform3fv(rvLoc, 1, v);
+    glUniform4fv(rvLoc, 1, v);
     
     
     
